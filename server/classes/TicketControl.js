@@ -30,6 +30,7 @@ class TicketControl {
                 tickets: this.tickets,
                 lastAttenedTicket: this.lastAttenedTicket
             };
+            console.log(status);
             const data = new Uint8Array(Buffer.from(JSON.stringify(status)));
             fs.writeFileSync('./server/data/control.json', data);
         } catch (error) {
@@ -77,9 +78,10 @@ class TicketControl {
             return {status: 'error', message: 'No hay tickets pendientes!'};
         }
         const ticket = this.tickets.shift();
-        ticket.attendUser = request.user;
+        ticket.attendUser = request.username;
         ticket.attendTimestamp = new Date();
         ticket.box = request.box;
+        ticket.status = 'ASSIGNED';
         
         this.lastAttenedTicket.unshift(ticket);
         if (this.lastAttenedTicket.length > 4) {

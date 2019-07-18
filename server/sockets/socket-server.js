@@ -18,9 +18,13 @@ io.on('connection', (client) => {
         callback(ticket);
     });
 
-    client.on('publish', function (data) {
-        console.log(`${data.username}: ${data.message}`);
-        client.broadcast.emit('published', data)
+    client.on('attend-ticket', (request, callback) => {
+        if (!request.box) {
+            callback('debe especificar el box' );
+        }
+        const ticketAssigned = tc.attendTicket(request);
+        callback(null, ticketAssigned);
+        // TODO: actualizar ultimos atendidos
     });
 
     const status = tc.getStatus();
