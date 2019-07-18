@@ -15,9 +15,7 @@ client.on('status', function (status) {
 })
 
 $('#new-ticket').on('click', function () {
-    console.log('click nuevo ticket');
-    client.emit('next-ticket', {user: 'gwfernandez', box: 1} , function (ticket) {
-        console.log('ticket: ', ticket);
+    client.emit('create-ticket', { user: 'gwfernandez' }, function (ticket) {
         label.text(`Ticket: ${ticket.ticketID}`);
     });
 });

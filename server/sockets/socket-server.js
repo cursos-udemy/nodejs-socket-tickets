@@ -2,6 +2,7 @@ const { io } = require('../server');
 const TicketControl = require('../classes/TicketControl');
 
 const tc = new TicketControl();
+// tc.reinitialize();
 tc.start();
 
 io.on('connection', (client) => {
@@ -12,8 +13,8 @@ io.on('connection', (client) => {
         console.log('El usuario se desconecto!!');
     });
 
-    client.on('next-ticket', (request, callback) => {
-        const ticket = tc.nextTicket(request);
+    client.on('create-ticket', (request, callback) => {
+        const ticket = tc.createTicket(request);
         callback(ticket);
     });
 
