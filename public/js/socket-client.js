@@ -10,6 +10,9 @@ client.on('disconnect', function () {
     console.log('Desconectado del servidor');
 });
 
+client.on('status', function (status) {
+    label.text(`Ticket: ${status.ticketID}`);
+})
 
 $('#new-ticket').on('click', function () {
     console.log('click nuevo ticket');

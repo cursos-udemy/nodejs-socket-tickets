@@ -12,15 +12,17 @@ io.on('connection', (client) => {
         console.log('El usuario se desconecto!!');
     });
 
-    client.on('next-ticket',  (request, callback) => {
+    client.on('next-ticket', (request, callback) => {
         const ticket = tc.nextTicket(request);
-
-        callback(ticket); 
+        callback(ticket);
     });
 
     client.on('publish', function (data) {
         console.log(`${data.username}: ${data.message}`);
         client.broadcast.emit('published', data)
     });
+
+    const status = tc.getStatus();
+    client.emit('status', { ...status });
 
 });

@@ -43,9 +43,20 @@ class TicketControl {
         this.lastTicket += 1;
         this.saveControl();
         console.info('execute nextTicket: [OK]');
-        return { ticketID: this.lastTicket, userAssigned: request.user, timestamp: new Date().getTime(), box: request.box };
+        const ticket = {
+            ticketID: this.lastTicket,
+            userAssigned: request.user,
+            timestamp: new Date().getTime(),
+            box: request.box
+        };
+        return ticket;
     }
 
+    getStatus() {
+        return {
+           ticketID: this.lastTicket 
+        }
+    }
 
 }
 
