@@ -19,7 +19,7 @@ class TicketControl {
         this.lastTicket = 0;
         this.attentionDate = new Date();
         this.tickets = [];
-        this.lastAttenedTicket = [];
+        this.lastTicketsAttended = [];
     }
 
     saveControl() {
@@ -28,9 +28,8 @@ class TicketControl {
                 lastTicket: this.lastTicket,
                 attentionDate: this.attentionDate,
                 tickets: this.tickets,
-                lastAttenedTicket: this.lastAttenedTicket
+                lastTicketsAttended: this.lastTicketsAttended
             };
-            console.log(status);
             const data = new Uint8Array(Buffer.from(JSON.stringify(status)));
             fs.writeFileSync('./server/data/control.json', data);
         } catch (error) {
@@ -43,7 +42,7 @@ class TicketControl {
         this.lastTicket = 0;
         this.attentionDate = new Date();
         this.tickets = [];
-        this.lastAttenedTicket = [];
+        this.lastTicketsAttended = [];
         this.saveControl();
         console.info('reinitilize [OK]');
     }
@@ -53,11 +52,11 @@ class TicketControl {
         if (data) {
             this.lastTicket = data.lastTicket || 0;
             this.tickets = data.tickets || [];
-            this.lastAttenedTicket = data.lastAttenedTicket || [];
+            this.lastTicketsAttended = data.lastTicketsAttended || [];
         } else {
             this.lastTicket = 0;
             this.tickets = [];
-            this.lastAttenedTicket = [];
+            this.lastTicketsAttended = [];
         }
         this.attentionDate = new Date();
         this.saveControl();
@@ -83,9 +82,9 @@ class TicketControl {
         ticket.box = request.box;
         ticket.status = 'ASSIGNED';
         
-        this.lastAttenedTicket.unshift(ticket);
-        if (this.lastAttenedTicket.length > 4) {
-            this.lastAttenedTicket.pop();
+        this.lastTicketsAttended.unshift(ticket);
+        if (this.lastTicketsAttended.length > 4) {
+            this.lastTicketsAttended.pop();
         }
 
         this.saveControl();
@@ -95,7 +94,8 @@ class TicketControl {
 
     getStatus() {
         return {
-            ticketID: this.lastTicket
+            ticketID: this.lastTicket,
+            lastTicketsAttended: this.lastTicketsAttended
         }
     }
 

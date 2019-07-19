@@ -2,7 +2,7 @@ const { io } = require('../server');
 const TicketControl = require('../classes/TicketControl');
 
 const tc = new TicketControl();
-// tc.reinitialize();
+//tc.reinitialize();
 tc.start();
 
 io.on('connection', (client) => {
@@ -27,7 +27,6 @@ io.on('connection', (client) => {
         // TODO: actualizar ultimos atendidos
     });
 
-    const status = tc.getStatus();
-    client.emit('status', { ...status });
+    client.emit('status', {...tc.getStatus()});
 
 });

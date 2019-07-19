@@ -23,7 +23,6 @@ $('#btnAttendTicket').on('click', function () {
     const request = {username, box}
     socketDesktop.emit('attend-ticket', request, function (err, ticketAssigned) {
         if (err) return alert('Error: ' + err);
-        console.log(ticketAssigned);
         labelTicket.text(ticketAssigned.ticketID);
     });
 });
