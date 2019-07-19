@@ -13,7 +13,11 @@ var lblEscritorio4 = $('#lblEscritorio4');
 var lblTickets = [lblTicket1, lblTicket2, lblTicket3, lblTicket4];
 var lblEscritorios = [lblEscritorio1, lblEscritorio2, lblEscritorio3, lblEscritorio4];
 
-socketScreen.on('status', (status) => {
+socketScreen.on('initial-state', (status) => {
+    refreshScreen(status.lastTicketsAttended);
+});
+
+socketScreen.on('refresh-state', (status) => {
     refreshScreen(status.lastTicketsAttended);
 });
 

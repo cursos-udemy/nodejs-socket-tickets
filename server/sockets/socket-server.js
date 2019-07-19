@@ -23,10 +23,10 @@ io.on('connection', (client) => {
             callback('debe especificar el box' );
         }
         const ticketAssigned = tc.attendTicket(request);
+        client.broadcast.emit('refresh-state', tc.getStatus());
         callback(null, ticketAssigned);
-        // TODO: actualizar ultimos atendidos
     });
 
-    client.emit('status', {...tc.getStatus()});
+    client.emit('initial-state', {...tc.getStatus()});
 
 });

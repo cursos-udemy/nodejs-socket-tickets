@@ -10,7 +10,11 @@ client.on('disconnect', function () {
     console.log('Desconectado del servidor');
 });
 
-client.on('status', function (status) {
+client.on('initial-state', function (status) {
+    label.text(`Ticket: ${status.ticketID}`);
+})
+
+client.on('refresh-state', function (status) {
     label.text(`Ticket: ${status.ticketID}`);
 })
 
